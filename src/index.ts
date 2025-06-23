@@ -25,7 +25,11 @@ app.get("/schools/:id", (c) => {
   return c.json(school);
 });
 
+// POST Create School
+
 // Delete School
+
+// DELETE School by ID
 app.delete("/schools/:id", (c) => {
   const id = Number(c.req.param("id"));
 
@@ -35,9 +39,6 @@ app.delete("/schools/:id", (c) => {
 
   return c.json(filteredSchool);
 });
-// POST Create School
-
-// DELETE School by ID
 
 // PATCH Update School by ID
 
