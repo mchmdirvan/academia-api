@@ -10,10 +10,12 @@ app.get("/", (c) => {
   });
 });
 
+// GET Schools
 app.get("/schools", (c) => {
   return c.json(schools);
 });
 
+// GET School by ID
 app.get("/schools/:id", (c) => {
   const id = Number(c.req.param("id"));
 
@@ -22,5 +24,15 @@ app.get("/schools/:id", (c) => {
 
   return c.json(school);
 });
+
+// POST Create School
+
+// Delete School
+
+// DELETE School by ID
+
+// PATCH Update School by ID
+
+// PUT Update School by ID
 
 export default app;
