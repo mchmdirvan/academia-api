@@ -28,7 +28,7 @@ app.get("/schools/:id", (c) => {
 // POST Create School
 app.post("/schools", (c) => {
   const newSchool = {
-    id: 4,
+    id: schools[schools.length - 1].id + 1,
     name: "SMAN 93 JAKARTA",
     npsn: "20103258",
     address: "JL. RAYA BOGOR KOMP. PASWALPRES",
