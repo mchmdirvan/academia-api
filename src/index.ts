@@ -26,6 +26,24 @@ app.get("/schools/:id", (c) => {
 });
 
 // POST Create School
+app.post("/schools", (c) => {
+  const newSchool = {
+    id: 4,
+    name: "SMAN 93 JAKARTA",
+    npsn: "20103258",
+    address: "JL. RAYA BOGOR KOMP. PASWALPRES",
+    provinceId: "010000  ",
+    province: "Prov. D.K.I. Jakarta",
+    cityId: "016400  ",
+    city: "Kota Jakarta Timur",
+    subdistrictId: "016405  ",
+    subdistrict: "Kec. Kramat Jati",
+  };
+
+  const updatedSchools = [...schools, newSchool];
+
+  return c.json(updatedSchools);
+});
 
 // Delete School
 
