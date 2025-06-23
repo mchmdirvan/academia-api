@@ -25,9 +25,17 @@ app.get("/schools/:id", (c) => {
   return c.json(school);
 });
 
-// POST Create School
-
 // Delete School
+app.delete("/schools/:id", (c) => {
+  const id = Number(c.req.param("id"));
+
+  const filteredSchool = schools.filter((school) => {
+    return school.id != id;
+  });
+
+  return c.json(filteredSchool);
+});
+// POST Create School
 
 // DELETE School by ID
 

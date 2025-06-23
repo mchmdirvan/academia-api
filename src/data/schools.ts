@@ -36,4 +36,16 @@ export const schools: Schools[] = [
     subdistrict_id: "016405  ",
     subdistrict: "Kec. Kramat Jati",
   },
+  {
+    id: 3,
+    name: "SMAN 104 JAKARTA",
+    npsn: "20103306",
+    address: "JL. RAYA BOGOR KM.20",
+    province_id: "010000  ",
+    province: "Prov. D.K.I. Jakarta",
+    city_id: "016400  ",
+    city: "Kota Jakarta Timur",
+    subdistrict_id: "016405  ",
+    subdistrict: "Kec. Kramat Jati",
+  },
 ];
