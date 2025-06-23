@@ -27,6 +27,7 @@ app.get("/schools/:id", (c) => {
 
 // POST Create School
 app.post("/schools", (c) => {
+  // request body
   const newSchool = {
     id: schools[schools.length - 1].id + 1,
     name: "SMAN 93 JAKARTA",

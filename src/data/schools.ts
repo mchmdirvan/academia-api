@@ -1,4 +1,4 @@
-type Schools = {
+export type School = {
   id: number;
   name: string;
   npsn: string;
@@ -11,17 +11,17 @@ type Schools = {
   subdistrict: string;
 };
 
-export const schools: Schools[] = [
+export const schools: School[] = [
   {
     id: 1,
     name: "SMAN 51 JAKARTA",
     npsn: "20103312",
     address: "JL. BATU AMPAR 3 CONDET",
-    provinceId: "010000  ",
+    provinceId: "010000",
     province: "Prov. D.K.I. Jakarta",
-    cityId: "016400  ",
+    cityId: "016400",
     city: "Kota Jakarta Timur",
-    subdistrictId: "016405  ",
+    subdistrictId: "016405",
     subdistrict: "Kec. Kramat Jati",
   },
   {
@@ -29,11 +29,11 @@ export const schools: Schools[] = [
     name: "SMAN 62 JAKARTA",
     npsn: "20103306",
     address: "JL. RAYA BOGOR KM.20",
-    provinceId: "010000  ",
+    provinceId: "010000",
     province: "Prov. D.K.I. Jakarta",
-    cityId: "016400  ",
+    cityId: "016400",
     city: "Kota Jakarta Timur",
-    subdistrictId: "016405  ",
+    subdistrictId: "016405",
     subdistrict: "Kec. Kramat Jati",
   },
   {
@@ -41,11 +41,11 @@ export const schools: Schools[] = [
     name: "SMAN 104 JAKARTA",
     npsn: "20103306",
     address: "JL. H. TAIMAN BARAT KEL.GEDONG,JAKARTA TIMUR",
-    provinceId: "010000  ",
+    provinceId: "010000",
     province: "Prov. D.K.I. Jakarta",
-    cityId: "016400  ",
+    cityId: "016400",
     city: "Kota Jakarta Timur",
-    subdistrictId: "016401  ",
+    subdistrictId: "016401",
     subdistrict: "Kec. Pasar Rebo",
   },
 ];
