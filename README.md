@@ -1,4 +1,6 @@
-# Schools API
+# Academia API
+
+A simple REST API for managing schools
 
 ## REST API Specification
 
