@@ -1,6 +1,7 @@
 import { Hono } from "hono";
+import { dataSchools } from "./data/schools";
 
-import { schools } from "./data/schools";
+let schools = dataSchools;
 
 const app = new Hono();
 
@@ -26,27 +27,22 @@ app.get("/schools/:id", (c) => {
 });
 
 // POST Create School
-app.post("/schools", (c) => {
-  // request body
+app.post("/schools", async (c) => {
+  const body = await c.req.json();
+
+  const nextId = schools.length > 0 ? schools[schools.length - 1].id + 1 : 1;
+
   const newSchool = {
-    id: schools[schools.length - 1].id + 1,
-    name: "SMAN 93 JAKARTA",
-    npsn: "20103258",
-    address: "JL. RAYA BOGOR KOMP. PASWALPRES",
-    provinceId: "010000  ",
-    province: "Prov. D.K.I. Jakarta",
-    cityId: "016400  ",
-    city: "Kota Jakarta Timur",
-    subdistrictId: "016405  ",
-    subdistrict: "Kec. Kramat Jati",
+    id: nextId,
+    ...body,
   };
 
   const updatedSchools = [...schools, newSchool];
 
-  return c.json(updatedSchools);
-});
+  schools = updatedSchools;
 
-// Delete School
+  return c.json(newSchool);
+});
 
 // DELETE School by ID
 app.delete("/schools/:id", (c) => {
@@ -56,8 +52,12 @@ app.delete("/schools/:id", (c) => {
     return school.id != id;
   });
 
+  schools = filteredSchool;
+
   return c.json(filteredSchool);
 });
+
+// Delete School
 
 // PATCH Update School by ID
 

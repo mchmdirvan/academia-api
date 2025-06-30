@@ -11,7 +11,7 @@ export type School = {
   subdistrict: string;
 };
 
-export const schools: School[] = [
+export const dataSchools: School[] = [
   {
     id: 1,
     name: "SMAN 51 JAKARTA",
