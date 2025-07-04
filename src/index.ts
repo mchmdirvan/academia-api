@@ -58,6 +58,13 @@ app.delete("/schools/:id", (c) => {
 });
 
 // Delete School
+app.delete("/schools", (c) => {
+  const id = Number(c.req.param("id"));
+
+  schools = [];
+
+  return c.json(schools);
+});
 
 // PATCH Update School by ID
 
