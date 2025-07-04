@@ -17,6 +17,7 @@ A simple REST API for managing schools
 ## ERD Diagram
 
 ![ERD Diagram](/public/erd.png)
+[ERD Diagram](https://dbdiagram.io/d/Academia-API-6867c5fdf413ba35084f6b3d)
 
 ## Getting Started
 
