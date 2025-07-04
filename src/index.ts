@@ -67,7 +67,53 @@ app.delete("/schools", (c) => {
 });
 
 // PATCH Update School by ID
+app.patch("/schools/:id", async (c) => {
+  const id = Number(c.req.param("id"));
+  const body = await c.req.json();
+
+  const newSchool = {
+    id: Number(id),
+    ...body,
+  };
+
+  const updatedSchool = schools.map((school) => {
+    if (school.id == id) {
+      return {
+        ...school,
+        ...newSchool,
+      };
+    } else {
+      return school;
+    }
+  });
+
+  schools = updatedSchool;
+  return c.json(newSchool);
+});
 
 // PUT Update School by ID
+app.put("/schools/:id", async (c) => {
+  const id = Number(c.req.param("id"));
+  const body = await c.req.json();
+
+  const newSchool = {
+    id: Number(id),
+    ...body,
+  };
+
+  const updatedSchool = schools.map((school) => {
+    if (school.id == id) {
+      return {
+        ...school,
+        ...newSchool,
+      };
+    } else {
+      return school;
+    }
+  });
+
+  schools = updatedSchool;
+  return c.json(newSchool);
+});
 
 export default app;
