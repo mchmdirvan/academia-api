@@ -101,6 +101,10 @@ app.put("/schools/:id", async (c) => {
     ...body,
   };
 
+  // Find school by id
+  // IF (!school) create
+  // ELSE update
+
   const updatedSchool = schools.map((school) => {
     if (school.id == id) {
       return {
