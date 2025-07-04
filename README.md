@@ -14,6 +14,10 @@ A simple REST API for managing schools
 | `/schools/:id` | PUT    | Update a school by ID           |      |
 | `/schools/:id` | PATCH  | Partially update a school by ID |      |
 
+## ERD Diagram
+
+![ERD Diagram](/public/erd.png)
+
 ## Getting Started
 
 To install dependencies:
