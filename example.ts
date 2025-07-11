@@ -10,6 +10,6 @@ const res = await client.query("SELECT * FROM schools");
 
 const schools = res.rows;
 
-console.log({ users: schools });
+console.log({ schools: schools });
 
 await client.end();
