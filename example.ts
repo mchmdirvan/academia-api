@@ -18,7 +18,7 @@ async function addSchools() {
   await client.connect();
 
   const result = await client.query(
-    "INSERT INTO schools (name, npsn) VALUES ('SMAN 62 Jakarta', '2020');"
+    "INSERT INTO schools (name, npsn) VALUES ('SMAN 39 Jakarta', '3030');"
   );
   console.log({ result });
 
@@ -29,3 +29,4 @@ async function addSchools() {
 }
 
 getSchools();
+// addSchools();
