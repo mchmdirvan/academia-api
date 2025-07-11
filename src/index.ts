@@ -104,7 +104,7 @@ app.put("/schools/:id", async (c) => {
   // Find school by id
   // IF (!school) create
   // ELSE update
-  const school = schools.find((school) => school.id === id);
+  const school = schools.find((school) => school.id == id);
   if (!school) {
     const nextId = schools.length > 0 ? schools[schools.length - 1].id + 1 : 1;
     const newSchool = {
