@@ -104,20 +104,29 @@ app.put("/schools/:id", async (c) => {
   // Find school by id
   // IF (!school) create
   // ELSE update
-
-  const updatedSchool = schools.map((school) => {
-    if (school.id == id) {
-      return {
-        ...school,
-        ...newSchool,
-      };
-    } else {
-      return school;
-    }
-  });
-
-  schools = updatedSchool;
-  return c.json(newSchool);
+  const school = schools.find((school) => school.id === id);
+  if (!school) {
+    const nextId = schools.length > 0 ? schools[schools.length - 1].id + 1 : 1;
+    const newSchool = {
+      id: nextId,
+      ...body,
+    };
+    const updatedSchools = [...schools, newSchool];
+    schools = updatedSchools;
+  } else {
+    const updatedSchool = schools.map((school) => {
+      if (school.id == id) {
+        return {
+          ...school,
+          ...newSchool,
+        };
+      } else {
+        return school;
+      }
+    });
+    schools = updatedSchool;
+    return c.json(newSchool);
+  }
 });
 
 export default app;
