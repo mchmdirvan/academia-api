@@ -8,8 +8,8 @@ await client.connect();
 
 const res = await client.query("SELECT * FROM schools");
 
-const users = res.rows;
+const schools = res.rows;
 
-console.log({ users });
+console.log({ users: schools });
 
 await client.end();
