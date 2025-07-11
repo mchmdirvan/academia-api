@@ -4,12 +4,28 @@ const client = new pg.Client({
   connectionString: process.env.DATABASE_URL,
 });
 
-await client.connect();
+async function getSchools() {
+  await client.connect();
 
-const res = await client.query("SELECT * FROM schools");
+  const result = await client.query("SELECT * FROM schools");
+  const schools = result.rows;
+  console.log({ schools });
 
-const schools = res.rows;
+  await client.end();
+}
 
-console.log({ schools: schools });
+async function addSchools() {
+  await client.connect();
 
-await client.end();
+  const result = await client.query(
+    "INSERT INTO schools (name, npsn) VALUES ('SMAN 62 Jakarta', '2020');"
+  );
+  console.log({ result });
+
+  const schools = result.rows;
+  console.log({ schools });
+
+  await client.end();
+}
+
+getSchools();
