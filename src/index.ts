@@ -1,7 +1,11 @@
 import { Hono } from "hono";
 import { dataSchools } from "./data/schools";
 
-let schools = dataSchools;
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+let data = dataSchools;
 
 const app = new Hono();
 
@@ -12,7 +16,8 @@ app.get("/", (c) => {
 });
 
 // GET Schools
-app.get("/schools", (c) => {
+app.get("/schools", async (c) => {
+  const schools = await prisma.school.findMany();
   return c.json(schools);
 });
 
@@ -20,7 +25,7 @@ app.get("/schools", (c) => {
 app.get("/schools/:id", (c) => {
   const id = Number(c.req.param("id"));
 
-  const school = schools.find((school) => school.id === id);
+  const school = data.find((school) => school.id === id);
   if (!school) return c.notFound();
 
   return c.json(school);
@@ -30,16 +35,16 @@ app.get("/schools/:id", (c) => {
 app.post("/schools", async (c) => {
   const body = await c.req.json();
 
-  const nextId = schools.length > 0 ? schools[schools.length - 1].id + 1 : 1;
+  const nextId = data.length > 0 ? data[data.length - 1].id + 1 : 1;
 
   const newSchool = {
     id: nextId,
     ...body,
   };
 
-  const updatedSchools = [...schools, newSchool];
+  const updatedSchools = [...data, newSchool];
 
-  schools = updatedSchools;
+  data = updatedSchools;
 
   return c.json(newSchool);
 });
@@ -48,11 +53,11 @@ app.post("/schools", async (c) => {
 app.delete("/schools/:id", (c) => {
   const id = Number(c.req.param("id"));
 
-  const filteredSchool = schools.filter((school) => {
+  const filteredSchool = data.filter((school) => {
     return school.id != id;
   });
 
-  schools = filteredSchool;
+  data = filteredSchool;
 
   return c.json(filteredSchool);
 });
@@ -61,9 +66,9 @@ app.delete("/schools/:id", (c) => {
 app.delete("/schools", (c) => {
   const id = Number(c.req.param("id"));
 
-  schools = [];
+  data = [];
 
-  return c.json(schools);
+  return c.json(data);
 });
 
 // PATCH Update School by ID
@@ -76,7 +81,7 @@ app.patch("/schools/:id", async (c) => {
     ...body,
   };
 
-  const updatedSchool = schools.map((school) => {
+  const updatedSchool = data.map((school) => {
     if (school.id == id) {
       return {
         ...school,
@@ -87,7 +92,7 @@ app.patch("/schools/:id", async (c) => {
     }
   });
 
-  schools = updatedSchool;
+  data = updatedSchool;
   return c.json(newSchool);
 });
 
@@ -104,17 +109,17 @@ app.put("/schools/:id", async (c) => {
   // Find school by id
   // IF (!school) create
   // ELSE update
-  const school = schools.find((school) => school.id == id);
+  const school = data.find((school) => school.id == id);
   if (!school) {
-    const nextId = schools.length > 0 ? schools[schools.length - 1].id + 1 : 1;
+    const nextId = data.length > 0 ? data[data.length - 1].id + 1 : 1;
     const newSchool = {
       id: nextId,
       ...body,
     };
-    const updatedSchools = [...schools, newSchool];
-    schools = updatedSchools;
+    const updatedSchools = [...data, newSchool];
+    data = updatedSchools;
   } else {
-    const updatedSchool = schools.map((school) => {
+    const updatedSchool = data.map((school) => {
       if (school.id == id) {
         return {
           ...school,
@@ -124,7 +129,7 @@ app.put("/schools/:id", async (c) => {
         return school;
       }
     });
-    schools = updatedSchool;
+    data = updatedSchool;
     return c.json(newSchool);
   }
 });
