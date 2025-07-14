@@ -21,20 +21,22 @@ model School {
   address    String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  provincyId Int
-  provincy   Provincy @relation(fields: [provincyId], references: [id])
+  provinceId Int
+  province   Province @relation(fields: [provinceId], references: [id])
   cityId     Int
   city       City     @relation(fields: [cityId], references: [id])
   districtId Int
   district   District @relation(fields: [districtId], references: [id])
 }
 
-model Provincy {
+model Province {
   id        Int      @id @default(autoincrement())
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   schools   School[]
+
+  @@map("Provincy")
 }
 
 model City {
