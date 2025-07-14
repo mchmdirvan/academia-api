@@ -15,12 +15,18 @@ datasource db {
 }
 
 model School {
-  id        Int      @id @default(autoincrement())
-  name      String
-  npsn      String   @unique
-  address   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  name       String
+  npsn       String   @unique
+  address    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  provincyId Int
+  provincy   Provincy @relation(fields: [provincyId], references: [id])
+  cityId     Int
+  city       City     @relation(fields: [cityId], references: [id])
+  districtId Int
+  district   District @relation(fields: [districtId], references: [id])
 }
 
 model Provincy {
@@ -28,6 +34,7 @@ model Provincy {
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  schools   School[]
 }
 
 model City {
@@ -35,6 +42,7 @@ model City {
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  schools   School[]
 }
 
 model District {
@@ -42,4 +50,5 @@ model District {
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  schools   School[]
 }
