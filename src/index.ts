@@ -37,16 +37,11 @@ app.get("/schools/:id", async (c) => {
 app.post("/schools", async (c) => {
   const body = await c.req.json();
 
-  const nextId = data.length > 0 ? data[data.length - 1].id + 1 : 1;
-
-  const newSchool = {
-    id: nextId,
-    ...body,
-  };
-
-  const updatedSchools = [...data, newSchool];
-
-  data = updatedSchools;
+  const newSchool = await prisma.school.create({
+    data: {
+      ...body,
+    },
+  });
 
   return c.json(newSchool);
 });
