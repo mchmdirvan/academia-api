@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { dataSchools } from "./data/schools";
 
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "./generated/prisma";
 
 const prisma = new PrismaClient();
 
