@@ -22,10 +22,12 @@ app.get("/schools", async (c) => {
 });
 
 // GET School by ID
-app.get("/schools/:id", (c) => {
+app.get("/schools/:id", async (c) => {
   const id = Number(c.req.param("id"));
 
-  const school = data.find((school) => school.id === id);
+  const school = await prisma.school.findUnique({
+    where: { id },
+  });
   if (!school) return c.notFound();
 
   return c.json(school);
