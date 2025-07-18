@@ -17,7 +17,14 @@ app.get("/", (c) => {
 
 // GET Schools
 app.get("/schools", async (c) => {
-  const schools = await prisma.school.findMany();
+  const schools = await prisma.school.findMany({
+    include: {
+      province: true,
+      city: true,
+      district: true,
+    },
+  });
+
   return c.json(schools);
 });
 
@@ -27,6 +34,11 @@ app.get("/schools/:id", async (c) => {
 
   const school = await prisma.school.findUnique({
     where: { id },
+    include: {
+      province: true,
+      city: true,
+      district: true,
+    },
   });
   if (!school) return c.notFound();
 
@@ -41,94 +53,26 @@ app.post("/schools", async (c) => {
     data: {
       ...body,
     },
+    include: {
+      province: true,
+      city: true,
+      district: true,
+    },
   });
 
   return c.json(newSchool);
 });
 
 // DELETE School by ID
-app.delete("/schools/:id", (c) => {
-  const id = Number(c.req.param("id"));
-
-  const filteredSchool = data.filter((school) => {
-    return school.id != id;
-  });
-
-  data = filteredSchool;
-
-  return c.json(filteredSchool);
-});
+app.delete("/schools/:id");
 
 // Delete School
-app.delete("/schools", (c) => {
-  const id = Number(c.req.param("id"));
-
-  data = [];
-
-  return c.json(data);
-});
+app.delete("/schools");
 
 // PATCH Update School by ID
-app.patch("/schools/:id", async (c) => {
-  const id = Number(c.req.param("id"));
-  const body = await c.req.json();
-
-  const newSchool = {
-    id: Number(id),
-    ...body,
-  };
-
-  const updatedSchool = data.map((school) => {
-    if (school.id == id) {
-      return {
-        ...school,
-        ...newSchool,
-      };
-    } else {
-      return school;
-    }
-  });
-
-  data = updatedSchool;
-  return c.json(newSchool);
-});
+app.patch("/schools/:id");
 
 // PUT Update School by ID
-app.put("/schools/:id", async (c) => {
-  const id = Number(c.req.param("id"));
-  const body = await c.req.json();
-
-  const newSchool = {
-    id: Number(id),
-    ...body,
-  };
-
-  // Find school by id
-  // IF (!school) create
-  // ELSE update
-  const school = data.find((school) => school.id == id);
-  if (!school) {
-    const nextId = data.length > 0 ? data[data.length - 1].id + 1 : 1;
-    const newSchool = {
-      id: nextId,
-      ...body,
-    };
-    const updatedSchools = [...data, newSchool];
-    data = updatedSchools;
-  } else {
-    const updatedSchool = data.map((school) => {
-      if (school.id == id) {
-        return {
-          ...school,
-          ...newSchool,
-        };
-      } else {
-        return school;
-      }
-    });
-    data = updatedSchool;
-    return c.json(newSchool);
-  }
-});
+app.put("/schools/:id");
 
 export default app;
