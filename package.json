@@ -9,7 +9,11 @@
     "db:migrate:deploy": "prisma migrate deploy",
     "db:gen": "prisma generate --no-hints",
     "db:seed": "prisma db seed",
-    "db:studio": "prisma studio --browser none"
+    "db:studio": "prisma studio --browser none",
+    "db:reset": "prisma migrate reset --skip-seed"
+  },
+  "prisma": {
+    "seed": "bun prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.12.0",
@@ -23,8 +27,5 @@
     "prisma": "^6.12.0",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"
-  },
-  "prisma": {
-    "seed": "bun prisma/seed.ts"
   }
 }
