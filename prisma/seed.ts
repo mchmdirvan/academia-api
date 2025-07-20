@@ -1,18 +1,24 @@
 import { PrismaClient } from "../src/generated/prisma";
+import createSlug from "../src/utils/slug";
+import { dataProvinces } from "./seed/provinces";
 
 const prisma = new PrismaClient();
 
 async function main() {
-  const province = await prisma.province.upsert({
-    where: { slug: "dki-jakarta" },
-    update: {},
-    create: {
-      name: "DKI Jakarta",
-      slug: "dki-jakarta",
-    },
-  });
+  for (const seedProvince of dataProvinces) {
+    const slug = createSlug(seedProvince.name);
 
-  console.log(province);
+    const province = await prisma.province.upsert({
+      where: { slug },
+      update: {},
+      create: {
+        slug,
+        ...seedProvince,
+      },
+    });
+
+    console.log(`🗼 Provincy: ${province.name} (${province.slug})`);
+  }
 }
 main()
   .then(async () => {
