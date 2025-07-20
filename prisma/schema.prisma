@@ -13,3 +13,68 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model School {
+  id   String @id @default(cuid())
+  slug String @unique
+
+  name    String
+  npsn    String @unique
+  address String
+
+  province   Province @relation(fields: [provinceId], references: [id])
+  provinceId String
+
+  city   City   @relation(fields: [cityId], references: [id])
+  cityId String
+
+  district   District @relation(fields: [districtId], references: [id])
+  districtId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Province {
+  id   String @id @default(cuid())
+  slug String @unique
+
+  name String
+
+  schools School[]
+  cities  City[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model City {
+  id   String @id @default(cuid())
+  slug String @unique
+
+  name String
+
+  province   Province @relation(fields: [provinceId], references: [id])
+  provinceId String
+
+  schools   School[]
+  districts District[]
+
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}
+
+model District {
+  id   String @id @default(cuid())
+  slug String @unique
+
+  name String
+
+  schools School[]
+
+  city   City   @relation(fields: [cityId], references: [id])
+  cityId String
+
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}
