@@ -17,7 +17,7 @@ async function main() {
       },
     });
 
-    console.log(`🗼 Provincy: ${province.name} (${province.slug})`);
+    console.log(`🆕 Provincy: ${province.name}`);
   }
 }
 main()
