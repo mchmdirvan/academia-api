@@ -16,8 +16,28 @@ app.get("/", (c) => {
 
 app.get("/provinces", async (c) => {
   const provinces = await prisma.province.findMany();
-  console.log(provinces);
+
   return c.json(provinces);
+});
+
+app.get("/provinces/:slug", async (c) => {
+  const slug = c.req.param("slug");
+
+  const province = await prisma.province.findUnique({
+    where: { slug },
+    select: {
+      id: true,
+      name: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  if (!province) {
+    c.notFound();
+  }
+
+  return c.json(province);
 });
 
 export default app;
