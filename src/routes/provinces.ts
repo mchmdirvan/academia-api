@@ -1,9 +1,9 @@
 import { Hono } from "hono";
-import { prisma } from "./utils/db";
+import { prisma } from "../utils/db";
 import { zValidator } from "@hono/zod-validator";
 import z from "zod";
 import slugify from "slugify";
-import { PrismaClientKnownRequestError } from "./generated/prisma/runtime/library";
+import { PrismaClientKnownRequestError } from "../generated/prisma/runtime/library";
 
 export const provinceRoute = new Hono()
   .get("/", async (c) => {
