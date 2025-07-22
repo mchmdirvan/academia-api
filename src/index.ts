@@ -4,7 +4,8 @@ import { Hono } from "hono";
 
 import { provinceRoute } from "./routes/provinces";
 import { rootRoute } from "./routes/roots";
-import { citiesRoute } from "./routes/district";
+import { citiesRoute } from "./routes/cities";
+import { districtRoute } from "./routes/district";
 
 const app = new Hono();
 
@@ -14,7 +15,8 @@ const apiRoutes = app
   .use("*", cors())
   .route("/", rootRoute)
   .route("/provinces", provinceRoute)
-  .route("/cities", citiesRoute);
+  .route("/cities", citiesRoute)
+  .route("/districts", districtRoute);
 
 export default app;
 

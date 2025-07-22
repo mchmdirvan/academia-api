@@ -7,25 +7,25 @@ import { PrismaClientKnownRequestError } from "../generated/prisma/runtime/libra
 
 import { prisma } from "../utils/db";
 
-export const citiesRoute = new Hono()
+export const districtRoute = new Hono()
   .get("/", async (c) => {
-    const cities = await prisma.city.findMany();
+    const districts = await prisma.district.findMany();
 
-    return c.json(cities);
+    return c.json(districts);
   })
 
   .get("/:slug", async (c) => {
     const { slug } = c.req.param();
 
-    const city = await prisma.city.findUnique({
+    const district = await prisma.district.findUnique({
       where: { slug },
     });
 
-    if (!city) {
+    if (!district) {
       return c.notFound();
     }
 
-    return c.json(city);
+    return c.json(district);
   })
 
   .post(
@@ -34,7 +34,7 @@ export const citiesRoute = new Hono()
       "json",
       z.object({
         name: z.string(),
-        provinceSlug: z.string(),
+        citySlug: z.string(),
       })
     ),
 
@@ -42,20 +42,20 @@ export const citiesRoute = new Hono()
       const body = c.req.valid("json");
 
       try {
-        const newcity = await prisma.city.create({
+        const newdistrict = await prisma.district.create({
           data: {
             name: body.name,
             slug: slugify(body.name),
-            provinceSlug: body.provinceSlug,
+            citySlug: body.citySlug,
           },
           include: {
-            province: true,
+            city: true,
           },
         });
 
         return c.json({
-          message: "Successfully created city!",
-          newProvice: newcity,
+          message: "Successfully created district!",
+          newProvice: newdistrict,
         });
       } catch (error) {
         if (
@@ -64,7 +64,7 @@ export const citiesRoute = new Hono()
         ) {
           c.status(409);
           return c.json({
-            message: `City with name '${body.name}' already exist.`,
+            message: `District with name '${body.name}' already exist.`,
           });
         }
 
