@@ -22,14 +22,14 @@ model School {
   npsn    String @unique
   address String
 
-  province   Province @relation(fields: [provinceId], references: [id])
-  provinceId String
+  province     Province @relation(fields: [provinceSlug], references: [slug])
+  provinceSlug String
 
-  city   City   @relation(fields: [cityId], references: [id])
-  cityId String
+  city     City   @relation(fields: [citySlug], references: [slug])
+  citySlug String
 
-  district   District @relation(fields: [districtId], references: [id])
-  districtId String
+  district     District @relation(fields: [districtSlug], references: [slug])
+  districtSlug String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -54,8 +54,8 @@ model City {
 
   name String
 
-  province   Province @relation(fields: [provinceId], references: [id])
-  provinceId String
+  province     Province @relation(fields: [provinceSlug], references: [slug])
+  provinceSlug String
 
   schools   School[]
   districts District[]
@@ -72,8 +72,8 @@ model District {
 
   schools School[]
 
-  city   City   @relation(fields: [cityId], references: [id])
-  cityId String
+  city     City   @relation(fields: [citySlug], references: [slug])
+  citySlug String
 
   createdAt DateTime @default(now())
   updateAt  DateTime @updatedAt
