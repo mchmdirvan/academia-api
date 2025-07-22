@@ -1,5 +1,6 @@
 import { PrismaClient } from "../src/generated/prisma";
 import createSlug from "../src/utils/slug";
+import { dataCities } from "./data/cities";
 
 import { dataProvinces } from "./data/provinces";
 
@@ -19,6 +20,21 @@ async function main() {
     });
 
     console.log(`🆕 Provincy: ${province.name}`);
+  }
+
+  for (const seedCity of dataCities) {
+    const slug = createSlug(seedCity.name);
+
+    const city = await prisma.city.upsert({
+      where: { slug },
+      update: {},
+      create: {
+        slug,
+        ...seedCity,
+      },
+    });
+
+    console.log(`🆕 Provincy: ${city.name}`);
   }
 }
 main()
