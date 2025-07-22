@@ -14,6 +14,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator zod {
+  provider = "zod-prisma-types"
+}
+
 model School {
   id   String @id @default(cuid())
   slug String @unique

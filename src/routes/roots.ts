@@ -1,8 +1,6 @@
-import { Hono } from "hono";
+import { createRoute, OpenAPIHono } from "@hono/zod-openapi";
+import { configApp, configDocs } from "../config/app";
 
-export const rootRoute = new Hono().get("/", (c) => {
-  return c.json({
-    message: "School API",
-    schools: "/schools",
-  });
-});
+const tags = ["root"];
+
+export const rootRoute = new OpenAPIHono();
