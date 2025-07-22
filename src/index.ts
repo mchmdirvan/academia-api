@@ -3,9 +3,9 @@ import { cors } from "hono/cors";
 import { Hono } from "hono";
 
 import { provinceRoute } from "./routes/provinces";
-import { rootRoute } from "./routes/roots";
-import { citiesRoute } from "./routes/cities";
 import { districtRoute } from "./routes/district";
+import { citiesRoute } from "./routes/cities";
+import { rootRoute } from "./routes/roots";
 
 const app = new Hono();
 
