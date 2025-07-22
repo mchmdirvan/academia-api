@@ -1,6 +1,7 @@
 import { PrismaClient } from "../src/generated/prisma";
 import createSlug from "../src/utils/slug";
-import { dataProvinces } from "./seed/provinces";
+
+import { dataProvinces } from "./data/provinces";
 
 const prisma = new PrismaClient();
 

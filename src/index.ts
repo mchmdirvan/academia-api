@@ -1,9 +1,9 @@
-import { Hono } from "hono";
-import { cors } from "hono/cors";
 import { logger } from "hono/logger";
+import { cors } from "hono/cors";
+import { Hono } from "hono";
 
-import { rootRoute } from "./routes/roots";
 import { provinceRoute } from "./routes/provinces";
+import { rootRoute } from "./routes/roots";
 
 const app = new Hono();
 
