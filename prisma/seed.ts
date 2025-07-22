@@ -4,6 +4,7 @@ import { dataCities } from "./data/cities";
 import { dataDistricts } from "./data/district";
 
 import { dataProvinces } from "./data/provinces";
+import { dataSchools } from "./data/schools";
 
 const prisma = new PrismaClient();
 
@@ -50,6 +51,20 @@ async function main() {
     });
 
     console.log(`🆕 District: ${district.name}`);
+  }
+
+  for (const seedSchool of dataSchools) {
+    const slug = createSlug(seedSchool.name);
+
+    const school = await prisma.school.upsert({
+      where: { slug },
+      update: {},
+      create: {
+        slug,
+        ...seedSchool,
+      },
+    });
+    console.log(`🆕 School: ${school.name}`);
   }
 }
 main()
