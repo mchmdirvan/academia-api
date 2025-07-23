@@ -4,7 +4,7 @@ A simple REST API for managing schools
 
 ## REST API Specification
 
-- Production URL: [https://academia-api.onrender.com](https://academia-api.onrender.com)
+- Production URL: [https://academia-api-htjl.onrender.com/](https://academia-api-htjl.onrender.com/)
 - Local URL: [http://localhost:3000](http://localhost:3000)
 
 School:
