@@ -1,6 +1,6 @@
 services:
   # backend:
-  #   image: academia-api
+  #   image: school-api
   #   build:
   #     context: .
   #   ports:

@@ -15,56 +15,66 @@ datasource db {
 }
 
 model School {
-  id Int @id @default(autoincrement())
+  id   String @id @default(cuid())
+  slug String @unique
 
   name    String
   npsn    String @unique
   address String
 
-  provinceId Int
-  province   Province @relation(fields: [provinceId], references: [id])
+  province     Province @relation(fields: [provinceSlug], references: [slug])
+  provinceSlug String
 
-  cityId Int
-  city   City @relation(fields: [cityId], references: [id])
+  city     City   @relation(fields: [citySlug], references: [slug])
+  citySlug String
 
-  districtId Int
-  district   District @relation(fields: [districtId], references: [id])
+  district     District @relation(fields: [districtSlug], references: [slug])
+  districtSlug String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Province {
-  id Int @id @default(autoincrement())
+  id   String @id @default(cuid())
+  slug String @unique
 
   name String
 
   schools School[]
+  cities  City[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@map("Provincy")
 }
 
 model City {
-  id Int @id @default(autoincrement())
+  id   String @id @default(cuid())
+  slug String @unique
 
   name String
 
-  schools School[]
+  province     Province @relation(fields: [provinceSlug], references: [slug])
+  provinceSlug String
+
+  schools   School[]
+  districts District[]
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updateAt  DateTime @updatedAt
 }
 
 model District {
-  id Int @id @default(autoincrement())
+  id   String @id @default(cuid())
+  slug String @unique
 
   name String
 
   schools School[]
 
+  city     City   @relation(fields: [citySlug], references: [slug])
+  citySlug String
+
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updateAt  DateTime @updatedAt
 }

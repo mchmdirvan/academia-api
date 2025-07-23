@@ -1,30 +1,33 @@
 {
   "name": "schools-api",
-  "type": "module",
   "scripts": {
     "dev": "bun run --hot src/index.ts",
-    "build": "bun install && prisma migrate deploy && prisma generate",
     "start": "bun run src/index.ts",
+    "build": "npm install && prisma migrate deploy && prisma generate",
     "db:up": "docker compose up -d",
     "db:migrate": "prisma migrate dev",
     "db:migrate:deploy": "prisma migrate deploy",
     "db:gen": "prisma generate --no-hints",
     "db:seed": "prisma db seed",
-    "db:studio": "prisma studio --browser none"
+    "db:studio": "prisma studio --browser none",
+    "db:reset": "prisma migrate reset --skip-seed"
+  },
+  "prisma": {
+    "seed": "bun prisma/seed.ts"
   },
   "dependencies": {
-    "@prisma/client": "^6.11.1",
-    "@types/node": "^24.0.13",
-    "@types/pg": "^8.15.4",
-    "dotenv": "^17.2.0",
-    "hono": "^4.8.1",
-    "install": "^0.13.0",
-    "pg": "^8.16.3",
-    "tsx": "^4.20.3",
-    "typescript": "^5.8.3"
+    "@hono/zod-validator": "^0.7.2",
+    "@prisma/client": "^6.12.0",
+    "@scalar/hono-api-reference": "^0.9.11",
+    "hono": "^4.8.5",
+    "slugify": "^1.6.6",
+    "zod": "^4.0.5"
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "prisma": "^6.11.1"
+    "@types/node": "^24.0.15",
+    "prisma": "^6.12.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
   }
 }
