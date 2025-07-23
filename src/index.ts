@@ -6,6 +6,7 @@ import { provinceRoute } from "./routes/provinces";
 import { districtRoute } from "./routes/district";
 import { citiesRoute } from "./routes/cities";
 import { rootRoute } from "./routes/roots";
+import { schoolRoute } from "./routes/schools";
 
 const app = new Hono();
 
@@ -16,7 +17,8 @@ const apiRoutes = app
   .route("/", rootRoute)
   .route("/provinces", provinceRoute)
   .route("/cities", citiesRoute)
-  .route("/districts", districtRoute);
+  .route("/districts", districtRoute)
+  .route("/schools", schoolRoute);
 
 export default app;
 
