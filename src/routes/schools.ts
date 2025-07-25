@@ -49,7 +49,7 @@ export const schoolRoute = new Hono()
         const newschool = await prisma.school.create({
           data: {
             name: body.name,
-            slug: slugify(body.name),
+            slug: slugify(body.name, { lower: true }),
             npsn: body.npsn,
             address: body.address,
             provinceSlug: body.provinceSlug,

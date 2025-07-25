@@ -44,7 +44,7 @@ export const provinceRoute = new Hono()
         const newProvince = await prisma.province.create({
           data: {
             name: body.name,
-            slug: slugify(body.name),
+            slug: slugify(body.name, { lower: true }),
           },
         });
 
