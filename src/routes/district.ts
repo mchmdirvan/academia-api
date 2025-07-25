@@ -44,9 +44,8 @@ export const districtRoute = new Hono()
       try {
         const newdistrict = await prisma.district.create({
           data: {
-            name: body.name,
+            ...body,
             slug: slugify(body.name, { lower: true }),
-            citySlug: body.citySlug,
           },
           include: {
             city: true,
@@ -96,9 +95,8 @@ export const districtRoute = new Hono()
     const body = await c.req.json();
 
     const district = {
-      name: body.name,
+      ...body,
       slug: slugify(body.name, { lower: true }),
-      citySlug: body.citySlug,
     };
 
     const updatedistrict = await prisma.district.update({

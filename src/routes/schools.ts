@@ -48,13 +48,8 @@ export const schoolRoute = new Hono()
       try {
         const newschool = await prisma.school.create({
           data: {
-            name: body.name,
+            ...body,
             slug: slugify(body.name, { lower: true }),
-            npsn: body.npsn,
-            address: body.address,
-            provinceSlug: body.provinceSlug,
-            citySlug: body.citySlug,
-            districtSlug: body.districtSlug,
           },
           include: {
             province: true,
@@ -106,13 +101,8 @@ export const schoolRoute = new Hono()
     const body = await c.req.json();
 
     const school = {
-      name: body.name,
+      ...body,
       slug: slugify(body.name, { lower: true }),
-      npsn: body.npsn,
-      address: body.address,
-      provinceSlug: body.provinceSlug,
-      citySlug: body.citySlug,
-      districtSlug: body.districtSlug,
     };
 
     const updatedSchool = await prisma.school.update({
