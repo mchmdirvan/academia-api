@@ -67,4 +67,46 @@ export const provinceRoute = new Hono()
         return c.json({ message: "Something wrong with server " });
       }
     }
-  );
+  )
+
+  .delete("/", async (c) => {
+    const result = await prisma.province.deleteMany();
+
+    return c.json({
+      message: "All provinces have been removed",
+      result,
+    });
+  })
+
+  .delete("/:id", async (c) => {
+    const id = c.req.param("id");
+
+    const deletedProvince = await prisma.province.delete({
+      where: { id },
+    });
+
+    return c.json({
+      message: `Deleted province with id ${id}`,
+      deletedAnimal: deletedProvince,
+    });
+  })
+
+  .put("/:slug", async (c) => {
+    const slug = c.req.param("slug");
+    const body = await c.req.json();
+
+    const province = {
+      name: body.name,
+      slug: slugify(body.name),
+    };
+
+    const updatedAnimal = await prisma.province.update({
+      where: { slug: slug },
+      data: province,
+    });
+
+    return c.json({
+      message: `Updated province with slug ${slug}`,
+      updatedAnimal,
+    });
+  });
