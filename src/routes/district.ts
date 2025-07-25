@@ -98,6 +98,7 @@ export const districtRoute = new Hono()
     const district = {
       name: body.name,
       slug: slugify(body.name, { lower: true }),
+      citySlug: body.citySlug,
     };
 
     const updatedistrict = await prisma.district.update({

@@ -108,6 +108,11 @@ export const schoolRoute = new Hono()
     const school = {
       name: body.name,
       slug: slugify(body.name, { lower: true }),
+      npsn: body.npsn,
+      address: body.address,
+      provinceSlug: body.provinceSlug,
+      citySlug: body.citySlug,
+      districtSlug: body.districtSlug,
     };
 
     const updatedSchool = await prisma.school.update({
