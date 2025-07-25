@@ -72,4 +72,37 @@ export const citiesRoute = new Hono()
         return c.json({ message: "Something wrong with server " });
       }
     }
-  );
+  )
+
+  .delete("/:slug", async (c) => {
+    const slug = c.req.param("slug");
+
+    const deletedCity = await prisma.city.delete({
+      where: { slug: slug },
+    });
+
+    return c.json({
+      message: `Deleted city with slug ${slug}`,
+      deletedCity: deletedCity,
+    });
+  })
+
+  .put("/:slug", async (c) => {
+    const slug = c.req.param("slug");
+    const body = await c.req.json();
+
+    const city = {
+      name: body.name,
+      slug: slugify(body.name),
+    };
+
+    const updatedCity = await prisma.city.update({
+      where: { slug: slug },
+      data: city,
+    });
+
+    return c.json({
+      message: `Updated province with slug ${slug}`,
+      updatedCity,
+    });
+  });
