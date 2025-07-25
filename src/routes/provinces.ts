@@ -1,11 +1,11 @@
 import { zValidator } from "@hono/zod-validator";
-import slugify from "slugify";
 import { Hono } from "hono";
 import z from "zod";
 
 import { PrismaClientKnownRequestError } from "../generated/prisma/runtime/library";
 
 import { prisma } from "../utils/db";
+import createSlug from "../utils/slug";
 
 export const provinceRoute = new Hono()
   .get("/", async (c) => {
@@ -44,7 +44,7 @@ export const provinceRoute = new Hono()
         const newProvince = await prisma.province.create({
           data: {
             ...body,
-            slug: slugify(body.name, { lower: true }),
+            slug: createSlug(body.name),
           },
         });
 
@@ -53,10 +53,7 @@ export const provinceRoute = new Hono()
           newProvice: newProvince,
         });
       } catch (error) {
-        if (
-          error instanceof PrismaClientKnownRequestError &&
-          error.code === "P2002"
-        ) {
+        if (error instanceof PrismaClientKnownRequestError && error.code === "P2002") {
           c.status(409);
           return c.json({
             message: `Province with name '${body.name}' already exist.`,
@@ -72,6 +69,15 @@ export const provinceRoute = new Hono()
   .delete("/:slug", async (c) => {
     const slug = c.req.param("slug");
 
+    const province = await prisma.province.findUnique({
+      where: { slug: slug },
+      include: {
+        schools: { select: { slug: true } },
+        cities: { select: { slug: true } },
+      },
+    });
+    if (!province) return c.notFound();
+
     try {
       const deletedProvince = await prisma.province.delete({
         where: { slug: slug },
@@ -79,10 +85,21 @@ export const provinceRoute = new Hono()
 
       return c.json({
         message: `Deleted province with slug ${slug}`,
-        deletedProvince: deletedProvince,
+        deletedProvince,
       });
     } catch (error) {
-      console.log(error);
+      if (error instanceof PrismaClientKnownRequestError && error.code === "P2003") {
+        return c.json(
+          {
+            message: `Province with slug '${slug}' cannot be deleted as it is associated with other entities: some schools and cities. Need to delete all schools in this province, then all cities in this province, before deleting this province.`,
+            error,
+            province,
+          },
+          409
+        );
+      }
+
+      return c.json({ message: "Failed to delete province.", error });
     }
   })
 
@@ -92,7 +109,7 @@ export const provinceRoute = new Hono()
 
     const province = {
       ...body,
-      slug: slugify(body.name, { lower: true }),
+      slug: createSlug(body.name),
     };
 
     const updatedProvince = await prisma.province.update({

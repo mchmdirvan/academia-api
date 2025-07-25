@@ -1,11 +1,11 @@
 import { zValidator } from "@hono/zod-validator";
-import slugify from "slugify";
 import { Hono } from "hono";
 import z from "zod";
 
 import { PrismaClientKnownRequestError } from "../generated/prisma/runtime/library";
 
 import { prisma } from "../utils/db";
+import createSlug from "../utils/slug";
 
 export const citiesRoute = new Hono()
   .get("/", async (c) => {
@@ -45,7 +45,7 @@ export const citiesRoute = new Hono()
         const newcity = await prisma.city.create({
           data: {
             ...body,
-            slug: slugify(body.name, { lower: true }),
+            slug: createSlug(body.name),
           },
           include: {
             province: true,
@@ -57,10 +57,7 @@ export const citiesRoute = new Hono()
           newProvice: newcity,
         });
       } catch (error) {
-        if (
-          error instanceof PrismaClientKnownRequestError &&
-          error.code === "P2002"
-        ) {
+        if (error instanceof PrismaClientKnownRequestError && error.code === "P2002") {
           c.status(409);
           return c.json({
             message: `City with name '${body.name}' already exist.`,
@@ -96,7 +93,7 @@ export const citiesRoute = new Hono()
 
     const city = {
       name: body.name,
-      slug: slugify(body.name, { lower: true }),
+      slug: createSlug(body.name),
       provinceSlug: body.provinceSlug,
     };
 
