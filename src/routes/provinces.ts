@@ -78,15 +78,15 @@ export const provinceRoute = new Hono()
     });
   })
 
-  .delete("/:id", async (c) => {
-    const id = c.req.param("id");
+  .delete("/:slug", async (c) => {
+    const slug = c.req.param("slug");
 
     const deletedProvince = await prisma.province.delete({
-      where: { id },
+      where: { slug: slug },
     });
 
     return c.json({
-      message: `Deleted province with id ${id}`,
+      message: `Deleted province with slug ${slug}`,
       deletedAnimal: deletedProvince,
     });
   })
