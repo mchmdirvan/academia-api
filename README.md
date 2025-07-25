@@ -26,9 +26,8 @@ Provinces:
 | `/provinces`     | GET    | List all provinces                | ✅   |
 | `/provinces/:id` | GET    | Get a province by ID              | ✅   |
 | `/provinces`     | POST   | Create a new province             | ✅   |
-| `/provinces`     | DELETE | Delete All Provinces              |      |
-| `/provinces/:id` | DELETE | Delete a province by ID           |      |
-| `/provinces/:id` | PUT    | Update a province by ID           |      |
+| `/provinces/:id` | DELETE | Delete a province by ID           | ✅   |
+| `/provinces/:id` | PUT    | Update a province by ID           | ✅   |
 | `/provinces/:id` | PATCH  | Partially update a province by ID |      |
 
 Cities:
@@ -38,7 +37,6 @@ Cities:
 | `/cities`     | GET    | List all cities               | ✅   |
 | `/cities/:id` | GET    | Get a city by ID              | ✅   |
 | `/cities`     | POST   | Create a new city             | ✅   |
-| `/cities`     | DELETE | Delete All Cities             |      |
 | `/cities/:id` | DELETE | Delete a city by ID           |      |
 | `/cities/:id` | PUT    | Update a city by ID           |      |
 | `/cities/:id` | PATCH  | Partially update a city by ID |      |
@@ -50,7 +48,6 @@ Districts:
 | `/districts`     | GET    | List all districts                | ✅   |
 | `/districts/:id` | GET    | Get a district by ID              | ✅   |
 | `/districts`     | POST   | Create a new district             | ✅   |
-| `/districts`     | DELETE | Delete All Districts              |      |
 | `/districts/:id` | DELETE | Delete a district by ID           |      |
 | `/districts/:id` | PUT    | Update a district by ID           |      |
 | `/districts/:id` | PATCH  | Partially update a district by ID |      |
