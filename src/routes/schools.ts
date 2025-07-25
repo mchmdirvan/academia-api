@@ -49,7 +49,7 @@ export const schoolRoute = new Hono()
         const newschool = await prisma.school.create({
           data: {
             name: body.name,
-            slug: slugify(body.name, { lower: true }),
+            slug: slugify(body.name),
             npsn: body.npsn,
             address: body.address,
             provinceSlug: body.provinceSlug,
@@ -82,4 +82,41 @@ export const schoolRoute = new Hono()
         return c.json({ message: "Something wrong with server " });
       }
     }
-  );
+  )
+
+  .delete("/:slug", async (c) => {
+    const slug = c.req.param("slug");
+
+    try {
+      const deletedSchool = await prisma.school.delete({
+        where: { slug: slug },
+      });
+
+      return c.json({
+        message: `Deleted school with slug ${slug}`,
+        deletedSchool: deletedSchool,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  })
+
+  .put("/:slug", async (c) => {
+    const slug = c.req.param("slug");
+    const body = await c.req.json();
+
+    const school = {
+      name: body.name,
+      slug: slugify(body.name, { lower: true }),
+    };
+
+    const updatedSchool = await prisma.school.update({
+      where: { slug: slug },
+      data: school,
+    });
+
+    return c.json({
+      message: `Updated school with slug ${slug}`,
+      updatedSchool: updatedSchool,
+    });
+  });
