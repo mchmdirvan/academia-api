@@ -45,7 +45,7 @@ export const citiesRoute = new Hono()
         const newcity = await prisma.city.create({
           data: {
             name: body.name,
-            slug: slugify(body.name),
+            slug: slugify(body.name, { lower: true }),
             provinceSlug: body.provinceSlug,
           },
           include: {
