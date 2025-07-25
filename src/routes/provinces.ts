@@ -91,13 +91,13 @@ export const provinceRoute = new Hono()
       slug: slugify(body.name),
     };
 
-    const updated = await prisma.province.update({
+    const updatedProvince = await prisma.province.update({
       where: { slug: slug },
       data: province,
     });
 
     return c.json({
       message: `Updated province with slug ${slug}`,
-      updated,
+      updatedProvince,
     });
   });
