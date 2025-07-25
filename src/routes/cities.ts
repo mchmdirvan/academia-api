@@ -77,14 +77,18 @@ export const citiesRoute = new Hono()
   .delete("/:slug", async (c) => {
     const slug = c.req.param("slug");
 
-    const deletedCity = await prisma.city.delete({
-      where: { slug: slug },
-    });
+    try {
+      const deletedCity = await prisma.city.delete({
+        where: { slug: slug },
+      });
 
-    return c.json({
-      message: `Deleted city with slug ${slug}`,
-      deletedCity: deletedCity,
-    });
+      return c.json({
+        message: `Deleted city with slug ${slug}`,
+        deletedCity: deletedCity,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   })
 
   .put("/:slug", async (c) => {
