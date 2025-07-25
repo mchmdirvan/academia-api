@@ -69,15 +69,6 @@ export const provinceRoute = new Hono()
     }
   )
 
-  .delete("/", async (c) => {
-    const result = await prisma.province.deleteMany();
-
-    return c.json({
-      message: "All provinces have been removed",
-      result,
-    });
-  })
-
   .delete("/:slug", async (c) => {
     const slug = c.req.param("slug");
 
