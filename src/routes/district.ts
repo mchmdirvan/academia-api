@@ -100,13 +100,13 @@ export const districtRoute = new Hono()
       slug: slugify(body.name, { lower: true }),
     };
 
-    const updateddistrict = await prisma.district.update({
+    const updatedistrict = await prisma.district.update({
       where: { slug: slug },
       data: district,
     });
 
     return c.json({
       message: `Updated district with slug ${slug}`,
-      updateddistrict,
+      updatedistrict,
     });
   });

@@ -79,7 +79,7 @@ export const provinceRoute = new Hono()
 
       return c.json({
         message: `Deleted province with slug ${slug}`,
-        deleted: deletedProvince,
+        deletedProvince: deletedProvince,
       });
     } catch (error) {
       console.log(error);
