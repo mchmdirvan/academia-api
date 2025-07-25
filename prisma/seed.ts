@@ -20,7 +20,7 @@ async function main() {
         ...seedProvince,
       },
     });
-    console.log(`🆕 Provincy: ${province.name}`);
+    console.log(`🆕 Province: ${province.name}`);
   }
 
   for (const seedCity of dataCities) {
@@ -35,7 +35,7 @@ async function main() {
       },
     });
 
-    console.log(`🆕 Provincy: ${city.name}`);
+    console.log(`🆕 Province: ${city.name}`);
   }
 
   for (const seedDistrict of dataDistricts) {
