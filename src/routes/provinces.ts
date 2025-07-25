@@ -78,7 +78,7 @@ export const provinceRoute = new Hono()
 
     return c.json({
       message: `Deleted province with slug ${slug}`,
-      deletedAnimal: deletedProvince,
+      deleted: deletedProvince,
     });
   })
 
@@ -91,13 +91,13 @@ export const provinceRoute = new Hono()
       slug: slugify(body.name),
     };
 
-    const updatedAnimal = await prisma.province.update({
+    const updated = await prisma.province.update({
       where: { slug: slug },
       data: province,
     });
 
     return c.json({
       message: `Updated province with slug ${slug}`,
-      updatedAnimal,
+      updated,
     });
   });
