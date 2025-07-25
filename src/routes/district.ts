@@ -72,4 +72,41 @@ export const districtRoute = new Hono()
         return c.json({ message: "Something wrong with server " });
       }
     }
-  );
+  )
+
+  .delete("/:slug", async (c) => {
+    const slug = c.req.param("slug");
+
+    try {
+      const deletedDistrict = await prisma.district.delete({
+        where: { slug: slug },
+      });
+
+      return c.json({
+        message: `Deleted district with slug ${slug}`,
+        deletedDistrict: deletedDistrict,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  })
+
+  .put("/:slug", async (c) => {
+    const slug = c.req.param("slug");
+    const body = await c.req.json();
+
+    const district = {
+      name: body.name,
+      slug: slugify(body.name, { lower: true }),
+    };
+
+    const updateddistrict = await prisma.district.update({
+      where: { slug: slug },
+      data: district,
+    });
+
+    return c.json({
+      message: `Updated district with slug ${slug}`,
+      updateddistrict,
+    });
+  });
