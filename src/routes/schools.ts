@@ -6,6 +6,7 @@ import z from "zod";
 import { PrismaClientKnownRequestError } from "../generated/prisma/runtime/library";
 
 import { prisma } from "../utils/db";
+import createSlug from "../utils/slug";
 
 export const schoolRoute = new Hono()
   .get("/", async (c) => {
@@ -49,7 +50,7 @@ export const schoolRoute = new Hono()
         const newschool = await prisma.school.create({
           data: {
             ...body,
-            slug: slugify(body.name, { lower: true }),
+            slug: createSlug(body.name),
           },
           include: {
             province: true,
@@ -102,7 +103,7 @@ export const schoolRoute = new Hono()
 
     const school = {
       ...body,
-      slug: slugify(body.name, { lower: true }),
+      slug: createSlug(body.name),
     };
 
     const updatedSchool = await prisma.school.update({

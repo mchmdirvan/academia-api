@@ -6,6 +6,7 @@ import z from "zod";
 import { PrismaClientKnownRequestError } from "../generated/prisma/runtime/library";
 
 import { prisma } from "../utils/db";
+import createSlug from "../utils/slug";
 
 export const provinceRoute = new Hono()
   .get("/", async (c) => {
@@ -44,7 +45,7 @@ export const provinceRoute = new Hono()
         const newProvince = await prisma.province.create({
           data: {
             ...body,
-            slug: slugify(body.name, { lower: true }),
+            slug: createSlug(body.name),
           },
         });
 
@@ -92,7 +93,7 @@ export const provinceRoute = new Hono()
 
     const province = {
       ...body,
-      slug: slugify(body.name, { lower: true }),
+      slug: createSlug(body.name),
     };
 
     const updatedProvince = await prisma.province.update({
