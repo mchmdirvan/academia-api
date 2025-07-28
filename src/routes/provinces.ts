@@ -83,7 +83,7 @@ export const provinceRoute = new Hono()
         deletedProvince: deletedProvince,
       });
     } catch (error) {
-      console.log(error);
+      return c.json({ message: "Failed to delete province", error });
     }
   })
 

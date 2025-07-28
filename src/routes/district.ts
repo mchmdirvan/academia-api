@@ -87,7 +87,7 @@ export const districtRoute = new Hono()
         deletedDistrict: deletedDistrict,
       });
     } catch (error) {
-      console.log(error);
+      return c.json({ message: "Failed to delete district.", error });
     }
   })
 

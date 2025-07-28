@@ -87,7 +87,7 @@ export const citiesRoute = new Hono()
         deletedCity: deletedCity,
       });
     } catch (error) {
-      console.log(error);
+      return c.json({ message: "Failed to delete city.", error });
     }
   })
 

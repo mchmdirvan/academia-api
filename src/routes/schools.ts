@@ -93,7 +93,7 @@ export const schoolRoute = new Hono()
         deletedSchool: deletedSchool,
       });
     } catch (error) {
-      console.log(error);
+      return c.json({ message: "Failed to delete school.", error });
     }
   })
 
