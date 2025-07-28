@@ -20,7 +20,7 @@ async function main() {
         ...seedProvince,
       },
     });
-    console.log(`🆕 Provincy: ${province.name}`);
+    console.log(`🗺️ Province: ${province.name}`);
   }
 
   for (const seedCity of dataCities) {
@@ -35,7 +35,7 @@ async function main() {
       },
     });
 
-    console.log(`🆕 Provincy: ${city.name}`);
+    console.log(`🏙️ City: ${city.name}`);
   }
 
   for (const seedDistrict of dataDistricts) {
@@ -50,7 +50,7 @@ async function main() {
       },
     });
 
-    console.log(`🆕 District: ${district.name}`);
+    console.log(`🏘️ District: ${district.name}`);
   }
 
   for (const seedSchool of dataSchools) {
@@ -64,7 +64,7 @@ async function main() {
         ...seedSchool,
       },
     });
-    console.log(`🆕 School: ${school.name}`);
+    console.log(`🏫 School: ${school.name}`);
   }
 }
 main()
