@@ -73,6 +73,15 @@ export const provinceRoute = new Hono()
   .delete("/:slug", async (c) => {
     const slug = c.req.param("slug");
 
+    const province = await prisma.province.findUnique({
+      where: { slug: slug },
+      include: {
+        schools: { select: { slug: true } },
+        cities: { select: { slug: true } },
+      },
+    });
+    if (!province) return c.notFound();
+
     try {
       const deletedProvince = await prisma.province.delete({
         where: { slug: slug },
@@ -80,10 +89,22 @@ export const provinceRoute = new Hono()
 
       return c.json({
         message: `Deleted province with slug ${slug}`,
-        deletedProvince: deletedProvince,
+        deletedProvince,
       });
     } catch (error) {
-      return c.json({ message: "Failed to delete province", error });
+      if (
+        error instanceof PrismaClientKnownRequestError &&
+        error.code === "P2003"
+      ) {
+        return c.json(
+          {
+            message: `Province with slug '${slug}' cannot be deleted as it is associated with other entities: some schools and cities. Need to delete all schools in this province, then all cities in this province, before deleting this province.`,
+            error,
+            province,
+          },
+          409
+        );
+      }
     }
   })
 
